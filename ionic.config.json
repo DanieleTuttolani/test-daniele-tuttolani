@@ -1,0 +1,7 @@
+{
+  "name": "Test Daniele Tuttolani",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue-vite"
+}

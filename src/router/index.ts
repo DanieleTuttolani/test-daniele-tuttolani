@@ -1,5 +1,9 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { RouteRecordRaw } from 'vue-router';
+import FolderPage from '@/views/FolderPage.vue';
+import FilterResult from '@/views/FilterResult.vue';
+
+
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -8,8 +12,15 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/folder/:id',
-    component: () => import ('../views/FolderPage.vue')
-  }
+    component: FolderPage,
+    name:'Home'
+  },
+ {
+  path:'/filter/:filterData',
+  props: true,
+  name: 'filterResults',
+  component: FilterResult
+ }
 ]
 
 const router = createRouter({

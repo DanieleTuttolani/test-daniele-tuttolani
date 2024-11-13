@@ -1,3 +1,43 @@
+<script setup>
+import { ref } from 'vue';
+import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonModal, IonDatetime } from '@ionic/vue';
+import { IonDatetimeButton } from '@ionic/vue';
+import { defineComponent } from 'vue';
+import router from '@/router';
+import { filter } from 'ionicons/icons';
+
+
+const hotel_codes = ['POL', 'MON', 'ALE'];
+
+const hotel_code = ref(null);
+const date_start = ref();
+const days = ref(1);
+
+
+// https://test.appazzurroclub.it/serveracv/public/api/Api3/offers?hotel_code=POL&date_start=2024-10-01&days=6&rooms%5B0%5D%5Bpeoples%5D=3&rooms%5B0%5D%5Broom_type_id%5D=37&lang=it&flexible_dates=true
+const primaProva = () => {
+  if (hotel_code.value && date_start.value && days.value) {
+
+    const apiBase = `https://test.appazzurroclub.it/serveracv/public/api/Api3/offers?hotel_code=${hotel_code.value}&date_start=${date_start.value}&days=${days.value}&rooms%5B0%5D%5Bpeoples%5D=3&rooms%5B0%5D%5Broom_type_id%5D=37&lang=it&flexible_dates=true `
+
+    fetch(apiBase, {
+      method: 'GET'
+    })
+      .then(x => x.json())
+      .then(filterData => {
+        console.log(filterData);
+        let result = JSON.stringify(filterData);
+        router.push({ name: 'filterResults', params: { filterData: result } })
+      })
+
+
+  } else {
+    //todo inserire validazione migliore ? 
+    alert('errore nei dati, per ora alert')
+  }
+
+}
+</script>
 <template>
   <ion-page>
     <ion-header :translucent="true">
@@ -5,7 +45,7 @@
         <ion-buttons slot="start">
           <ion-menu-button color="primary"></ion-menu-button>
         </ion-buttons>
-        <ion-title>{{ $route.params.id }}</ion-title>
+        <ion-title>Test Ionic Daniele Tuttolani</ion-title>
       </ion-toolbar>
     </ion-header>
 
@@ -17,16 +57,41 @@
       </ion-header>
 
       <div id="container">
-        <strong class="capitalize">{{ $route.params.id }}</strong>
-        <p>Explore <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+        <div class="card">
+          <!-- titolo -->
+          <strong class="capitalize">Cerca Hotel</strong>
+          <!-- contenuto card -->
+          <div class="card-flex">
+
+            <div class="label">
+              <p class="label-title">Codice Hotel</p>
+              <select v-model="hotel_code">
+                <option v-for="code in hotel_codes">{{ code }}</option>
+              </select>
+            </div>
+            <div class="label">
+              <p class="label-title">Data d'inizio</p>
+              <input type="date" v-model="date_start">
+            </div>
+            <div class="label">
+              <p class="label-title">Numero Giorni</p>
+              <input type="number" min="0" max="365" v-model="days">
+            </div>
+            <ion-modal :keep-contents-mounted="true">
+              <ion-datetime id="datetime"></ion-datetime>
+            </ion-modal>
+          </div>
+
+          <button @click="primaProva"
+            style="border-radius: 10px; background-color: white; padding: 15px;">Cerca</button>
+
+        </div>
+
       </div>
     </ion-content>
   </ion-page>
 </template>
 
-<script setup lang="ts">
-import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
-</script>
 
 <style scoped>
 #container {
@@ -41,6 +106,7 @@ import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, Io
 #container strong {
   font-size: 20px;
   line-height: 26px;
+  color: white;
 }
 
 #container p {
@@ -52,5 +118,43 @@ import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, Io
 
 #container a {
   text-decoration: none;
+}
+
+.card {
+  background-color: #1e1e1e;
+  border-radius: 20px;
+  width: 50%;
+  min-height: 400px;
+  transform: translateX(50%);
+  padding: 10px;
+}
+
+.card-flex {
+  display: flex;
+  padding: 10px;
+  flex-wrap: nowrap;
+  flex-direction: column;
+}
+
+.label {
+  border: 1px solid white;
+  padding: 10px;
+  border-radius: 10px;
+  position: relative;
+  margin: 10px 0 10px 0;
+}
+
+.label>select,
+.label>input {
+  border-radius: 10px;
+  padding: 10px;
+  width: -webkit-fill-available;
+}
+
+.label-title {
+  top: -14px;
+  position: absolute;
+  color: white;
+  background-color: #1e1e1e;
 }
 </style>

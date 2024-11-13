@@ -25,7 +25,6 @@ const primaProva = () => {
     })
       .then(x => x.json())
       .then(filterData => {
-        console.log(filterData);
         let result = JSON.stringify(filterData);
         router.push({ name: 'filterResults', params: { filterData: result } })
       })
@@ -33,7 +32,7 @@ const primaProva = () => {
 
   } else {
     //todo inserire validazione migliore ? 
-    alert('errore nei dati, per ora alert')
+    alert('Non hai inserito tutti i dati')
   }
 
 }

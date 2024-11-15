@@ -68,9 +68,9 @@ const results = JSON.parse(props.filterData)
 }
 
 .card {
-    background-color: #d2d2d2;
+    background-color: #11568c;
     border-radius: 20px;
-    width: 50%;
+    width: 90%;
     padding: 10px;
 }
 
@@ -101,5 +101,10 @@ const results = JSON.parse(props.filterData)
     position: absolute;
     color: white;
     background-color: #1e1e1e;
+}
+
+ion-toolbar {
+    --background: #eba807;
+    color: white;
 }
 </style>

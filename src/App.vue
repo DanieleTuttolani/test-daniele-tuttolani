@@ -1,4 +1,5 @@
 <template>
+
   <ion-app>
     <ion-split-pane content-id="main-content">
       <ion-menu content-id="main-content" type="overlay">
@@ -69,8 +70,9 @@ const labels = ['Strutture Ricettive', 'Ostelli', '3+Stelle', 'Michelin Approved
 </script>
 
 <style scoped>
+/* #11568c */
 ion-menu ion-content {
-  --background: var(--ion-item-background, var(--ion-background-color, #fff));
+  --background: var(--ion-item-background, var(--ion-background-color, #1d99c8));
 }
 
 ion-menu.md ion-content {
@@ -80,8 +82,18 @@ ion-menu.md ion-content {
   --padding-bottom: 20px;
 }
 
+
 ion-menu.md ion-list {
   padding: 20px 0;
+  margin-top: 10px;
+  border-radius: 15px;
+
+}
+
+ion-list:hover {
+  box-shadow: 4px 3px 7px rgb(73, 73, 73);
+  border-radius: 5px;
+  transition: linear 100ms;
 }
 
 ion-menu.md ion-note {
